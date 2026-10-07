@@ -1,0 +1,14 @@
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: blog-db-service 
+  namespace: three-tier 
+  labels:  
+    app: database  
+spec: 
+  clusterIP: None 
+  selector: 
+    app: database 
+  ports:
+    - port: 5432    
+      targetPort: 5432 

@@ -1,0 +1,13 @@
+# ---- PersistentVolumeClaim for PostgreSQL (EBS) ----
+apiVersion: v1  
+kind: PersistentVolumeClaim
+metadata:
+  name: blog-ebs-pvc
+  namespace: three-tier      
+spec:
+  accessModes: 
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: blog-ebs-sc # This is the storage class name
