@@ -1,0 +1,37 @@
+ubuntu@ip-172-31-10-142:~$ sudo kubectl exec -it blog-db-0 -n three-tier -- sh
+/ # ls
+
+
+/ # psql -U chetan_user -d chetan_db
+
+chetan_db=# \dt
+            List of relations
+ Schema |   Name   | Type  |    Owner
+--------+----------+-------+-------------
+ public | comments | table | chetan_user
+ public | posts    | table | chetan_user
+(2 rows)
+
+chetan_db=# select * from comments;
+ id | post_id | author | content | created_at
+----+---------+--------+---------+------------
+(0 rows)
+
+chetan_db=# select * from posts;
+ id |    title    |        content         | author | emoji |         created_at         |         updated_at
+----+-------------+------------------------+--------+-------+----------------------------+----------------------------
+  1 | Hello World | Nice to meet you world | Chetan | ✨    | 2026-10-07 11:29:53.474916 | 2026-10-07 11:29:53.474916
+(1 row)
+
+chetan_db=# select * from comments;
+ id | post_id | author |   content    |         created_at
+----+---------+--------+--------------+----------------------------
+  1 |       1 | Baba   | Nice thought | 2026-10-07 11:45:25.386807
+(1 row)
+
+chetan_db=# select * from posts;
+ id |    title    |        content         | author | emoji |         created_at         |         updated_at
+----+-------------+------------------------+--------+-------+----------------------------+----------------------------
+  1 | Hello World | Nice to meet you world | Chetan | ✨    | 2026-10-07 11:29:53.474916 | 2026-10-07 11:29:53.474916
+(1 row)
+

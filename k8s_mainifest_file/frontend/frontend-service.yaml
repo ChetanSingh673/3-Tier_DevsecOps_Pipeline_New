@@ -1,0 +1,16 @@
+# ---- Frontend Service (ClusterIP — internal only) ----
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog-frontend-service
+  namespace: three-tier
+  labels:
+    app: frontend
+spec:
+  type: ClusterIP
+  selector: 
+    app: frontend
+  ports:
+    - port: 8080
+      targetPort: 8080  

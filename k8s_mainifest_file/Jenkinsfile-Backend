@@ -1,0 +1,156 @@
+pipeline {
+    agent any
+
+     tools {
+        jdk 'jdk21'
+        nodejs "node16"
+    }
+
+    options {
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        IMAGE_NAME = "chetansingh673/blog-backend"
+        GIT_USER   = "ChetanSingh673"
+        GIT_EMAIL  = "chetan.singh673@gmail.com"
+        SCANNER_HOME = tool 'sonar-scanner' 
+    }
+    
+    stages {
+        stage("Clean Workspace") {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/ChetanSingh673/3-Tier_DevsecOps_Pipeline.git'
+            }
+        }
+
+        stage("SonarQube Analysis") {
+            steps {
+                withSonarQubeEnv('sonar-server') {
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner \
+                        -Dsonar.projectName=Backend \
+                        -Dsonar.projectKey=Backend '''
+                }
+            }
+        }
+
+        stage("Quality Gate") {
+            steps {
+                script {
+                    timeout(time: 3, unit: 'MINUTES') {
+                        waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+                    }
+                }
+            }
+        }
+        
+        stage("Trivy File Scan") {
+            steps {
+                sh "trivy fs . > trivyfs.txt"
+            }
+        }
+        
+        stage('Build and Push Image') {
+            when { branch 'main' }
+            steps {
+                script {
+                    env.IMAGE_TAG = "build-${BUILD_NUMBER}"
+
+                    withCredentials([string(credentialsId: 'dockerhub-creds', variable: 'dockerpwd')]) {                       
+                        sh """
+                        docker build -t ${IMAGE_NAME}:${IMAGE_TAG} backend
+                        echo "$dockerpwd" | docker login -u chetansingh673 --password-stdin
+                        docker push ${IMAGE_NAME}:${IMAGE_TAG}
+                        """
+                    }
+                }
+            }
+        }
+
+        stage("Trivy Scan Image") {
+            steps {
+                script {
+                    sh """
+                    echo "🔍 Running Trivy scan on ${IMAGE_NAME}:${IMAGE_TAG}"
+
+                    # JSON report
+                    trivy image -f json -o trivy-image.json ${IMAGE_NAME}:${IMAGE_TAG}
+                    # HTML report using built-in HTML format
+                    trivy image -f table -o trivy-image.txt ${IMAGE_NAME}:${IMAGE_TAG}
+
+                    # Fail build if HIGH/CRITICAL vulnerabilities found
+                    # trivy image --exit-code 1 --severity HIGH,CRITICAL ${IMAGE_NAME}:${IMAGE_TAG} || true
+                    """
+                }
+            }
+        }
+
+        stage('Update K8s Manifest') {
+            when { branch 'main' }
+            steps {
+                script {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'github-creds',
+                        usernameVariable: 'GIT_USERNAME',
+                        passwordVariable: 'GIT_TOKEN'
+                    )]) {              
+                        sh """
+                        set -e
+                        git config user.name "$GIT_USERNAME"
+                        git config user.email "$GIT_EMAIL"
+
+                        git fetch origin
+                        git checkout main
+                        git reset --hard origin/main
+
+                        sed -i "s|image:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|" k8s_mainifest_file/backend/backend-deployment.yaml
+
+                        git add k8s_mainifest_file/backend/backend-deployment.yaml
+                        git diff --cached --quiet || git commit -m "Updated image to ${IMAGE_TAG}"
+                        git push https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/$GIT_USERNAME/3-Tier_DevsecOps_Pipeline.git main
+                        """
+                    }
+                }
+            }
+        }
+    }
+  post {
+    always {
+        script {
+            echo "========== EMAIL NOTIFICATION START =========="
+            echo "Build Status: ${currentBuild.currentResult}"
+            echo "Job Name: ${env.JOB_NAME}"
+            echo "Build Number: ${env.BUILD_NUMBER}"
+            echo "Build URL: ${env.BUILD_URL}"
+
+            emailext(
+                subject: "Pipeline ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                    <h2>Jenkins CI/CD Pipeline Status</h2>
+
+                    <p><b>Project:</b> ${env.JOB_NAME}</p>
+                    <p><b>Build Number:</b> ${env.BUILD_NUMBER}</p>
+                    <p><b>Status:</b> ${currentBuild.currentResult}</p>
+
+                    <p>
+                        <b>Build URL:</b>
+                        <a href="${env.BUILD_URL}">
+                            ${env.BUILD_URL}
+                        </a>
+                    </p>
+                """,
+                to: 'chetan.singh673@gmail.com,chetan.pokhariya93@gmail.com',
+                mimeType: 'text/html'
+            )
+
+            echo "========== EMAIL NOTIFICATION END =========="
+        }
+     }
+  }
+}
