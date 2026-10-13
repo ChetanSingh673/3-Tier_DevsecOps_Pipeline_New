@@ -1,27 +1,31 @@
-External Secrets Operator (ESO) - AWS Secrets Manager
+# External Secrets Operator (ESO) - AWS Secrets Manager
 Kubernetes manifests for syncing database credentials from AWS Secrets Manager into Kubernetes Secrets using the External Secrets Operator (ESO) with IRSA authentication.
 
-Prerequisites
+**Prerequisites**
 Install kubectl Refer https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 
-Install eksctl
+* Install eksctl
 
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 sudo mv /tmp/eksctl /usr/local/bin
-Install helm
+
+* Install helm
 
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4
 chmod 700 get_helm.sh
 ./get_helm.sh
-Create an EKS Cluster
+
+* Create an EKS Cluster
 
 eksctl create cluster --name my-cluster --region ap-south-1 --node-type t3.medium --version 1.35
-External Secrets Operator installed in the cluster
+
+* External Secrets Operator installed in the cluster
 
 helm repo add external-secrets https://charts.external-secrets.io
 helm repo update
 helm install external-secrets external-secrets/external-secrets --namespace external-secrets --create-namespace --set installCRDs=true
-Install EBS CSI Controller
+
+* Install EBS CSI Controller
 
 aws iam attach-role-policy \
 --role-name <NodeInstanceRoleName> \
@@ -29,7 +33,7 @@ aws iam attach-role-policy \
 kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.44"
 If using a KMS customer-managed key, add kms:Decrypt permission on the KMS key ARN
 
-Files
+**Files**
 File	Description
 service-account.yaml	ServiceAccount annotated with the IAM role ARN for IRSA
 cluster-secret-store.yaml	ClusterSecretStore connecting ESO to AWS Secrets Manager in ap-south-1
