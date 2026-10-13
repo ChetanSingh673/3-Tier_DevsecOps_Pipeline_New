@@ -42,19 +42,25 @@ kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernete
 If using a KMS customer-managed key, add kms:Decrypt permission on the KMS key ARN
 
 **Files**
-File	Description
-service-account.yaml	ServiceAccount annotated with the IAM role ARN for IRSA
-cluster-secret-store.yaml	ClusterSecretStore connecting ESO to AWS Secrets Manager in ap-south-1
-external-secret.yaml	ExternalSecret that syncs prod/db-credentials into a Kubernetes Secret
-mongo-service.yaml	Headless Service for MongoDB StatefulSet DNS discovery
-mongo-statefulset.yaml	MongoDB 3-node replica set StatefulSet using ESO-synced credentials
-Setup
-1. Create the secret in AWS Secrets Manager
+|File	| Description
+| :--- | :--- |
+service-account.yaml |	ServiceAccount annotated with the IAM role ARN for IRSA
+cluster-secret-store.yaml	| ClusterSecretStore connecting ESO to AWS Secrets Manager in ap-south-1
+external-secret.yaml |	ExternalSecret that syncs prod/db-credentials into a Kubernetes Secret
+mongo-service.yaml |	Headless Service for MongoDB StatefulSet DNS discovery
+mongo-statefulset.yaml |	MongoDB 3-node replica set StatefulSet using ESO-synced credentials
+
+# Setup
+
+**1. Create the secret in AWS Secrets Manager**
+```bash
 aws secretsmanager create-secret \
   --name prod/db-credentials \
   --region ap-south-1 \
   --secret-string '{"username":"admin","password":"s3cur3pass"}'
-2. Enable OIDC provider for the EKS cluster
+```
+**2. Enable OIDC provider for the EKS cluster**
+```bash
 # Check if OIDC is already associated
 aws eks describe-cluster --name my-cluster --region ap-south-1 \
   --query "cluster.identity.oidc.issuer" --output text
@@ -64,7 +70,9 @@ eksctl utils associate-iam-oidc-provider \
   --cluster my-cluster \
   --region ap-south-1 \
   --approve
-3. Create the IAM policy
+```
+**3. Create the IAM policy**
+```bash
 aws iam create-policy \
   --policy-name ESO-SecretsManager-Policy \
   --policy-document '{
@@ -80,7 +88,10 @@ aws iam create-policy \
       }
     ]
   }'
-4. Create the IAM role with trust policy
+```
+
+**4. Create the IAM role with trust policy**
+```bash
 # Get your OIDC provider ID
 OIDC_ID=$(aws eks describe-cluster --name my-cluster --region ap-south-1 \
   --query "cluster.identity.oidc.issuer" --output text | cut -d'/' -f5)
@@ -111,7 +122,10 @@ aws iam create-role \
 aws iam attach-role-policy \
   --role-name ESO-SecretsManager-Role \
   --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/ESO-SecretsManager-Policy
-5. Update placeholders
+```
+
+**5. Update placeholders**
+
 In service-account.yaml, replace:
 
 <ACCOUNT_ID> — your AWS account ID
@@ -120,13 +134,18 @@ In external-secret.yaml, update:
 
 namespace — the namespace where your application runs
 remoteRef.key — if your secret name differs from prod/db-credentials
-6. Apply the manifests
+
+**6. Apply the manifests**
+```bash
 kubectl apply -f service-account.yaml
 kubectl apply -f cluster-secret-store.yaml
 kubectl apply -f external-secret.yaml
 kubectl apply -f mongo-service.yaml
 kubectl apply -f mongo-statefulset.yaml
-7. Verify ESO
+```
+
+**7. Verify ESO**
+```bash
 # Check the ClusterSecretStore status
 kubectl get clustersecretstore aws-secrets-manager
 
@@ -135,7 +154,10 @@ kubectl get externalsecret -n app db-credentials
 
 # Verify the Kubernetes Secret was created
 kubectl get secret -n app db-credentials -o jsonpath='{.data.username}' | base64 -d
-8. Verify MongoDB
+```
+
+**8. Verify MongoDB**
+```bash
 # Check StatefulSet rollout
 kubectl get statefulset -n app mongo
 
@@ -152,3 +174,4 @@ aws secretsmanager put-secret-value \
   --region ap-south-1 \
   --secret-string '{"username":"admin","password":"newpassword"}'
 ESO will sync the updated value on the next refresh cycle (configured to 1h in external-secret.yaml).
+```
