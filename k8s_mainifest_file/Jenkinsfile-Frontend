@@ -69,6 +69,20 @@ pipeline {
             }
         }
         
+        stage('Kubernetes Manifest Security Scan') {
+            steps {
+               sh '''
+                   set -eu
+
+                   trivy config \
+                      --severity HIGH,CRITICAL \
+                      --exit-code 1 \
+                      --format table \
+                      k8s_mainifest_file/
+                '''
+            }
+        }
+        
         stage('Build and Push Image') {
             when { branch 'main' }
             steps {
