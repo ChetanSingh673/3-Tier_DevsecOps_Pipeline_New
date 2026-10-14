@@ -1,7 +1,7 @@
 #=============================================================
 # Build Stage for dependency 
 #=============================================================
-FROM node:22-alpine AS build 
+FROM node:26-alpine AS build 
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev && npm cache clean --force
@@ -9,7 +9,7 @@ RUN npm ci --omit=dev && npm cache clean --force
 #=============================================================
 # Production Stage
 #=============================================================
-FROM node:22-alpine AS production 
+FROM node:26-alpine AS production 
 
 RUN apk upgrade --no-cache
 
