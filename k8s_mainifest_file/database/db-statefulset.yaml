@@ -28,6 +28,30 @@ spec:
           volumeMounts:
             - name: db-storage
               mountPath: /var/lib/postgresql
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          # Security Context
+          securityContext:
+            allowPrivilegeEscalation: false
+            readonlyRootFilesystem: false  # Postgres needs write access
+            runAsNonRoot: false            # postgres image runs initdb as root then drops
+          livenessProbe:
+            exec:
+              command: ["pg_ready", "-U", "POSTGRES_USER", "-d", "POSTGRES_DB"]
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:    
+              command: ["pg_ready", "-U", "POSTGRES_USER", "-d", "POSTGRES_DB"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3     
       volumes: 
         - name: db-storage
           persistentVolumeClaim:
