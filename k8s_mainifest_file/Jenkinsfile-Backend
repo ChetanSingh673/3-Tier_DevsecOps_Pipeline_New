@@ -26,7 +26,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/ChetanSingh673/3-Tier_DevsecOps_Pipeline.git'
+                git branch: 'main', url: 'https://github.com/ChetanSingh673/3-Tier_DevsecOps_Pipeline_New.git'
             }
         }
 
@@ -126,7 +126,7 @@ pipeline {
 
                         git add k8s_mainifest_file/backend/backend-deployment.yaml
                         git diff --cached --quiet || git commit -m "Updated image to ${IMAGE_TAG}"
-                        git push https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/$GIT_USERNAME/3-Tier_DevsecOps_Pipeline.git main
+                        git push https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/$GIT_USERNAME/3-Tier_DevsecOps_Pipeline_New.git main
                         """
                     }
                 }
