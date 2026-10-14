@@ -11,7 +11,7 @@ RUN npm run build
 #========================================================================
 # Production Stage
 #========================================================================
-FROM nginx:1.31-alpine AS production
+FROM nginx:1.30.5-alpine3.24 AS production
 
 # Security: remove default nginx config
 RUN rm -rf /etc/nginx/conf.d/default.conf  /usr/share/nginx/html/*
