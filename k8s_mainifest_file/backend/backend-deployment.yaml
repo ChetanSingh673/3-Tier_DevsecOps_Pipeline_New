@@ -17,7 +17,7 @@ spec:
     spec:
       initContainers:
         - name: wait-for-db
-          image: chetansingh673/blog-backend:build-3
+          image: chetansingh673/blog-backend:build-4
           command:
             - sh
             - -c 
@@ -30,7 +30,7 @@ spec:
               echo "DB is ready!"   
       containers:
         - name: blog-backend-container                   
-          image: chetansingh673/blog-backend:build-3
+          image: chetansingh673/blog-backend:build-4
           ports:
             - containerPort: 5000 
           env:
