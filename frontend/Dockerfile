@@ -13,6 +13,9 @@ RUN npm run build
 #========================================================================
 FROM nginx:1.30.5-alpine3.24 AS production
 
+# Upgrade OS packages to patched versions available in Alpine repositories
+RUN apk update && apk upgrade --no-cache
+
 # Security: remove default nginx config
 RUN rm -rf /etc/nginx/conf.d/default.conf  /usr/share/nginx/html/*
 
