@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: blog-frontend-container # optional
-          image: chetansingh673/blog-frontend:build-3
+          image: chetansingh673/blog-frontend:build-4
           imagePullPolicy: Always
           ports:
            - containerPort: 8080 
