@@ -30,7 +30,7 @@ The project follows a GitOps-based deployment approach, where Jenkins is respons
 * [Jenkins System Configuration](#jenkins-system-configuration)
 * [EKS ALB Ingress Kubernetes Setup Guide](#eks-alb-ingress-kubernetes-setup-guide)
 * [Monitor Kubernetes with Prometheus](#monitor-kubernetes-with-prometheus)
-* [Installing Argo CD](#installing-argo-cd)
+* [Installing Argo CD](#installing-Argo-CD-on-the-eks-cluster)
 * [Notes and Recommendations](#notes-and-recommendations)
 
 ---
@@ -590,12 +590,12 @@ promtool check config /etc/prometheus/prometheus.yml
 sudo systemctl restart  prometheus.service
 ```
 
+████████████████████████████████████████████████████████████████████████████████████████
+
 # Installing Argo CD on the eks cluster
 Docs: [https://www.eksworkshop.com/docs/automation/gitops/argocd/access_argocd](https://www.eksworkshop.com/docs/automation/gitops/argocd/access_argocd)
 
 Docs: [https://github.com/argoproj/argo-helm](https://github.com/argoproj/argo-helm)
-
-████████████████████████████████████████████████████████████████████████████████████████
 
 # Argocd installation via helm chart
 ```bash
