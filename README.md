@@ -10,6 +10,32 @@ This README collects useful commands and links to install common DevOps, CI/CD, 
 
 ---
 
+## Architecture
+
+```bash
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│   Frontend   │────▶│   Backend    │────▶│  PostgreSQL   │
+│   (React +   │◀────│  (Node.js +  │◀────│              │
+│    Nginx)    │     │   Express)   │     │              │
+│   Port 80    │     │  Port 5000   │     │  Port 5432   │
+└──────────────┘     └──────────────┘     └──────────────┘
+```
+
+## Project Structure
+
+3-Tier_DevsecOps_Pipeline_New/
+├── frontend/                # React (Vite) frontend
+│   ├── src/                 # React components & pages
+│   ├── nginx.conf           # Nginx config for serving the app
+│   └── package.json
+├── backend/                 # Node.js Express API
+│   ├── src/                 # Routes, DB connection
+│   └── package.json
+├── deploy/                  # EC2 deployment scripts
+│   ├── setup.sh             # One-click EC2 setup script
+│   └── jerney-nginx.conf    # Nginx reverse proxy config
+└── README.md
+
 ## Table of Contents
 
 * [Prerequisites](#prerequisites)
