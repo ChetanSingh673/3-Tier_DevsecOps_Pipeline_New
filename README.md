@@ -24,6 +24,7 @@ This README collects useful commands and links to install common DevOps, CI/CD, 
 ## Project Structure
 ```bash
 3-Tier_DevsecOps_Pipeline_New/
+|
 ├── frontend/                # React (Vite) frontend
 │   ├── src/                 # React components & pages
 │   ├── nginx.conf           # Nginx config for serving the app
