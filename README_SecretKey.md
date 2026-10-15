@@ -60,8 +60,8 @@ sudo aws secretsmanager create-secret \
   --region ap-south-1 \
   --secret-string '{"POSTGRES_USER":"chetan_user","POSTGRES_PASSWORD":"chetan1234","POSTGRES_DB":"chetan_db"}'
 ```
-**verify the secret**
 ```bash
+# verify the secret
 aws secretsmanager describe-secret \
   --secret-id prod/db-creds \
   --region ap-south-1
