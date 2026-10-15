@@ -31,6 +31,7 @@ The project follows a GitOps-based deployment approach, where Jenkins is respons
 * [EKS ALB Ingress Kubernetes Setup Guide](#eks-alb-ingress-kubernetes-setup-guide)
 * [Monitor Kubernetes with Prometheus](#monitor-kubernetes-with-prometheus)
 * [Installing Argo CD](#installing-Argo-CD-on-the-eks-cluster)
+* [AWS Secret Manager configuration](#external-secrets-operator-aws-secrets-manager)
 * [Notes and Recommendations](#notes-and-recommendations)
 
 ---
