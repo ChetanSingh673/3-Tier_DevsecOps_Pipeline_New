@@ -13,12 +13,12 @@ This README collects useful commands and links to install common DevOps, CI/CD, 
 ## Architecture
 
 ```bash
-┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│   Frontend   │────▶│   Backend    │────▶│  PostgreSQL   │
-│   (React +   │◀────│  (Node.js +  │◀────│              │
-│    Nginx)    │     │   Express)   │     │              │
-│   Port 80    │     │  Port 5000   │     │  Port 5432   │
-└──────────────┘     └──────────────┘     └──────────────┘
+┌──────────────┐      ┌──────────────┐      ┌──────────────┐
+│   Frontend   │────▶│   Backend     │────▶│  PostgreSQL  │
+│   (React +   │◀────│  (Node.js +   │◀────│              │
+│    Nginx)    │      │   Express)   │      │              │
+│   Port 80    │      │  Port 5000   │      │  Port 5432   │
+└──────────────┘      └──────────────┘      └──────────────┘
 ```
 
 ## Project Structure
