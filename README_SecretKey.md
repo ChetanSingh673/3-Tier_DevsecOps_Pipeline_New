@@ -157,22 +157,34 @@ sudo kubectl get secret -n three-tier db-credentials -o jsonpath='{.data.POSTGRE
 
 ```
 
-**6. Verify MongoDB**
+**6. Verify PostgresDB**
 ```bash
-# Check StatefulSet rollout
-kubectl get statefulset -n app mongo
+sudo kubectl exec -it blog-db-0 -n three-tier -- sh
+/ # psql -U chetan_user -d chetan_db
+psql (16.15)
+Type "help" for help.
 
-# Check all pods are running
-kubectl get pods -n app -l app=mongo
+chetan_db=# \conninfo
+You are connected to database "chetan_db" as user "chetan_user" via socket in "/var/run/postgresql" at port "5432".
 
-# Initialize the replica set (run once after all pods are ready)
-kubectl exec -n app mongo-0 -- mongosh -u admin -p <password>
-Updating Secrets
-Update the secret value in AWS Secrets Manager:
+chetan_db=# \dt
+            List of relations
+ Schema |   Name   | Type  |    Owner
+--------+----------+-------+-------------
+ public | comments | table | chetan_user
+ public | posts    | table | chetan_user
+(2 rows)
 
-aws secretsmanager put-secret-value \
-  --secret-id prod/db-credentials \
-  --region ap-south-1 \
-  --secret-string '{"username":"admin","password":"newpassword"}'
-ESO will sync the updated value on the next refresh cycle (configured to 1h in external-secret.yaml).
+
+chetan_db=# select * from comments;
+ id | post_id | author |  content   |         created_at
+----+---------+--------+------------+----------------------------
+  1 |       1 | Chetan | Nice One!! | 2026-10-15 09:02:40.110416
+(1 row)
+
+chetan_db=# select * from posts;
+ id |           title           |   content   | author | emoji |         created_at         |         updated_at
+----+---------------------------+-------------+--------+-------+----------------------------+----------------------------
+  1 | This is the first comment | Hello World | Chetan | ✨    | 2026-10-15 09:02:21.644363 | 2026-10-15 09:02:21.644363
+(1 row)
 ```
