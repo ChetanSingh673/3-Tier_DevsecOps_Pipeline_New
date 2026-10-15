@@ -647,8 +647,6 @@ If using a KMS customer-managed key, add kms:Decrypt permission on the KMS key A
 service-account.yaml |	ServiceAccount annotated with the IAM role ARN for IRSA
 cluster-secret-store.yaml	| ClusterSecretStore connecting ESO to AWS Secrets Manager in ap-south-1
 external-secret.yaml |	ExternalSecret that syncs prod/db-credentials into a Kubernetes Secret
-mongo-service.yaml |	Headless Service for MongoDB StatefulSet DNS discovery
-mongo-statefulset.yaml |	MongoDB 3-node replica set StatefulSet using ESO-synced credentials
 
 # Setup
 
