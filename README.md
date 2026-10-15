@@ -590,10 +590,6 @@ promtool check config /etc/prometheus/prometheus.yml
 sudo systemctl restart  prometheus.service
 ```
 
-# Create the multi Branch pipeline in the Jenkins from UI
-
-Refer to the **docs/screenshots** folder. Inside it, you will find the **jenkins_Pipeline_Configuration_SS**, which contains screenshots showing how to create the Multibranch Pipeline in the Jenkins UI.
-
 # Installing Argo CD on the eks cluster
 Docs: [https://www.eksworkshop.com/docs/automation/gitops/argocd/access_argocd](https://www.eksworkshop.com/docs/automation/gitops/argocd/access_argocd)
 
