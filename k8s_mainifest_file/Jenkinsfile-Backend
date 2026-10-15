@@ -62,7 +62,15 @@ pipeline {
                 }
             }
         }
-        
+         
+        stage("Install NPM Dependencies") {
+             steps {
+                dir('backend') {
+                    sh "npm install"
+                }
+            }
+        } 
+
         stage("Trivy File Scan") {
             steps {
                 sh "trivy fs . > trivyfs.txt"
