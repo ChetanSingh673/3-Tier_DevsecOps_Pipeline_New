@@ -55,10 +55,10 @@ mongo-statefulset.yaml |	MongoDB 3-node replica set StatefulSet using ESO-synced
 
 **1. Create the secret in AWS Secrets Manager**
 ```bash
-aws secretsmanager create-secret \
+sudo aws secretsmanager create-secret \
   --name prod/db-credentials \
   --region ap-south-1 \
-  --secret-string '{"username":"admin","password":"s3cur3pass"}'
+  --secret-string '{"POSTGRES_USER":"chetan_user","POSTGRES_PASSWORD":"chetan1234","POSTGRES_DB":"chetan_db"}'
 ```
 **2. Enable OIDC provider for the EKS cluster**
 ```bash
