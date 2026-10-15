@@ -11,8 +11,6 @@ RUN npm ci --omit=dev && npm cache clean --force
 #=============================================================
 FROM node:26-alpine AS production 
 
-RUN apk upgrade --no-cache
-
 # Security: run as non-root user
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
