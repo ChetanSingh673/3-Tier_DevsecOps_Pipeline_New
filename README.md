@@ -33,9 +33,29 @@ This README collects useful commands and links to install common DevOps, CI/CD, 
 │   ├── src/                 # Routes, DB connection
 │   └── package.json
 |   └── nginx.conf           # Nginx reverse proxy config  
-├── k8s_mainifest_file/                
-│
-|           
+|
+├── k8s_manifest_file/
+|   |
+├── backend/
+│   ├── backend-deployment.yaml
+│   └── backend-service.yaml
+├── database/
+│   ├── db-pvc.yaml
+│   ├── db-service.yaml
+│   ├── db-statefulset.yaml
+│   └── db-storageclass.yaml
+├── frontend/
+│   ├── frontend-deployment.yaml
+│   └── frontend-service.yaml
+├── infrastructure/
+│   ├── cluster-secret-store.yaml
+│   ├── external-secret.yaml
+│   ├── ingress.yaml
+│   ├── namespace.yaml
+│   ├── network-policy.yaml
+│   └── service-account.yaml
+├── Jenkinsfile-Backend
+└── Jenkinsfile-Frontend        
 │   
 └── README.md
 ```
