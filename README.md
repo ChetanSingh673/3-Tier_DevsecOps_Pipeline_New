@@ -24,40 +24,36 @@ This README collects useful commands and links to install common DevOps, CI/CD, 
 ## Project Structure
 ```bash
 3-Tier_DevsecOps_Pipeline_New/
-|
-├── frontend/                # React (Vite) frontend
-│   ├── src/                 # React components & pages
-│   ├── nginx.conf           # Nginx config for serving the app
+├── frontend/                        # React (Vite) frontend
+│   ├── src/                         # React components & pages
+│   ├── nginx.conf                   # Nginx config for serving the app
 │   └── package.json
-├── backend/                 # Node.js Express API
-│   ├── src/                 # Routes, DB connection
-│   └── package.json
-|   └── nginx.conf           # Nginx reverse proxy config  
-|
+├── backend/                         # Node.js Express API
+│   ├── src/                         # Routes, DB connection
+│   ├── package.json
+│   └── nginx.conf                   # Nginx reverse proxy config  
 ├── k8s_manifest_file/
-|   |
-├── backend/
-│   ├── backend-deployment.yaml
-│   └── backend-service.yaml
-├── database/
-│   ├── db-pvc.yaml
-│   ├── db-service.yaml
-│   ├── db-statefulset.yaml
-│   └── db-storageclass.yaml
-├── frontend/
-│   ├── frontend-deployment.yaml
-│   └── frontend-service.yaml
-├── infrastructure/
-│   ├── cluster-secret-store.yaml
-│   ├── external-secret.yaml
-│   ├── ingress.yaml
-│   ├── namespace.yaml
-│   ├── network-policy.yaml
-│   └── service-account.yaml
-├── Jenkinsfile-Backend
-└── Jenkinsfile-Frontend        
-│   
-└── README.md
+│   ├── backend/
+│   │   ├── backend-deployment.yaml
+│   │   └── backend-service.yaml
+│   ├── database/
+│   │   ├── db-pvc.yaml
+│   │   ├── db-service.yaml
+│   │   ├── db-statefulset.yaml
+│   │   └── db-storageclass.yaml
+│   ├── frontend/
+│   │   ├── frontend-deployment.yaml
+│   │   └── frontend-service.yaml
+│   ├── infrastructure/
+│   │   ├── cluster-secret-store.yaml
+│   │   ├── external-secret.yaml
+│   │   ├── ingress.yaml
+│   │   ├── namespace.yaml
+│   │   ├── network-policy.yaml
+│   │   └── service-account.yaml
+│   ├── Jenkinsfile-Backend
+│   └── Jenkinsfile-Frontend
+└── README.md                        # Documentation and architecture diagrams
 ```
 
 ## Table of Contents
