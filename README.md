@@ -6,7 +6,42 @@ This README collects useful commands and links to install common DevOps, CI/CD, 
 
 ## End-to-End Deployment Flow
 
-![Architecture Diagram](End-to-End_Deployment_Flow.png)
+```bash
+[ Developer Workspace ] 
+        │
+        ▼
+   [ GitHub ] ────( Git Checkout )────► [ Jenkins CI Server ]
+                                               │
+        ┌──────────────────────────────────────┘
+        ▼
+[ SonarQube Analysis ] ──► [ Quality Gate ] ──► [ NPM Install ] 
+                                                    │
+                                    ┌───────────────┘
+                                    ▼
+                    [ Trivy File System Scan ]
+                                    │
+                                    ▼
+                      [ Docker Build & Push to Registry ]
+                                    │
+                                    ▼
+                        [ Trivy Container Image Scan ] ──► [ Email Notification ]
+                                    │
+                                    ▼
+                        [ Update K8s Manifest in Git ]
+                                    │
+                                    ▼
+                      [ Argo CD (GitOps Synchronization) ]
+                                    │
+                                    ▼
+                      [ Helm Deployment to AWS EKS ]
+                                    │
+         ┌──────────────────────────┴──────────────────────────┐
+         ▼                                                     ▼
+[ Prometheus + Grafana Monitoring ]                     [ Route 53 DNS ]
+                                                               │
+                                                               ▼
+                                                      [ blog.cloudmella.com ]
+                                                      (Live Blog Platform)
 
 ---
 
