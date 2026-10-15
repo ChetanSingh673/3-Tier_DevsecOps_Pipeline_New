@@ -1,4 +1,4 @@
-# BLOG Platform CICD DevSecOps — Setup Guide
+# 3-Tier CICD DevSecOps Blog Platform — Setup Guide
 
 This README collects useful commands and links to install common DevOps, CI/CD, and security tooling on Ubuntu systems. It has been cleaned up, organized, and corrected for clarity. Always review commands for your environment and needs.
 
