@@ -32,9 +32,11 @@ This README collects useful commands and links to install common DevOps, CI/CD, 
 ├── backend/                 # Node.js Express API
 │   ├── src/                 # Routes, DB connection
 │   └── package.json
-├── deploy/                  # EC2 deployment scripts
-│   ├── setup.sh             # One-click EC2 setup script
-│   └── jerney-nginx.conf    # Nginx reverse proxy config
+|   └── nginx.conf           # Nginx reverse proxy config  
+├── k8s_mainifest_file/                
+│
+|           
+│   
 └── README.md
 ```
 
