@@ -167,7 +167,8 @@ pipeline {
                     </p>
                 """,
                 to: 'chetan.singh673@gmail.com,chetan.pokhariya93@gmail.com',
-                mimeType: 'text/html'
+                mimeType: 'text/html',
+                attachmentsPattern: 'trivyfs.txt,trivy-image.json,trivy-image.txt'
             )
 
             echo "========== EMAIL NOTIFICATION END =========="
