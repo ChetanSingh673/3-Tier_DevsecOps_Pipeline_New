@@ -43,7 +43,7 @@ This README collects useful commands and links to install common DevOps, CI/CD, 
                                                       [ blog.cloudmella.com ]
                                                       (Live Blog Platform)
 
----
+```
 
 ## Architecture
 
