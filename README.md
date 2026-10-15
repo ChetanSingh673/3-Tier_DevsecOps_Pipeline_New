@@ -31,7 +31,7 @@ The project follows a GitOps-based deployment approach, where Jenkins is respons
 * [EKS ALB Ingress Kubernetes Setup Guide](#eks-alb-ingress-kubernetes-setup-guide)
 * [Monitor Kubernetes with Prometheus](#monitor-kubernetes-with-prometheus)
 * [Installing Argo CD](#installing-Argo-CD-on-the-eks-cluster)
-* [AWS Secret Manager configuration](#external-secrets-operator-aws-secrets-manager)
+* [AWS Secrets Manager Configuration with External Secrets Operator](#aws-secrets-manager-configuration-with-external-secrets-operator)
 * [Notes and Recommendations](#notes-and-recommendations)
 
 ---
@@ -619,7 +619,7 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 ████████████████████████████████████████████████████████████████████████████████████████
 
-# External Secrets Operator (ESO) - AWS Secrets Manager
+# AWS Secrets Manager Configuration with External Secrets Operator
 
 Kubernetes manifests for syncing database credentials from AWS Secrets Manager into Kubernetes Secrets using the External Secrets Operator (ESO) with IRSA authentication.
 
