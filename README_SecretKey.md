@@ -142,16 +142,7 @@ In external-secret.yaml, update:
 namespace — the namespace where your application runs
 remoteRef.key — if your secret name differs from prod/db-credentials
 
-**6. Apply the manifests**
-```bash
-kubectl apply -f service-account.yaml
-kubectl apply -f cluster-secret-store.yaml
-kubectl apply -f external-secret.yaml
-kubectl apply -f mongo-service.yaml
-kubectl apply -f mongo-statefulset.yaml
-```
-
-**7. Verify ESO**
+**6. Verify ESO**
 ```bash
 # Check the ClusterSecretStore status
 kubectl get clustersecretstore aws-secrets-manager
@@ -166,7 +157,7 @@ sudo kubectl get secret -n three-tier db-credentials -o jsonpath='{.data.POSTGRE
 
 ```
 
-**8. Verify MongoDB**
+**6. Verify MongoDB**
 ```bash
 # Check StatefulSet rollout
 kubectl get statefulset -n app mongo
