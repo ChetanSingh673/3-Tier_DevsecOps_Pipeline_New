@@ -503,12 +503,12 @@ Create the User and apply the policy on it "AdministratorAccess"
 
 # 6. Create EKS Cluster and Nodegroup
 ```bash
-eksctl create cluster --name chetan-cluster2026 --region us-west-2 --version 1.33 --node-type t3.medium --nodes 2  --nodes-min 2 --nodes-max 4 --node-volume-size 30 --zones us-west-2a,us-west-2b
+eksctl create cluster --name chetan-cluster2026 --region ap-south-1 --version 1.33 --node-type t3.medium --nodes 2  --nodes-min 2 --nodes-max 4 --node-volume-size 30 --zones ap-south-1a,ap-south-1b
 ```
 
 # 7. Update kubeconfig
 ```bash
-aws eks update-kubeconfig --name chetan-cluster2026 --region us-west-2
+aws eks update-kubeconfig --name chetan-cluster2026 --region ap-south-1
 ```
 
 # 8. Associate IAM OIDC Provider
@@ -538,7 +538,7 @@ eksctl create iamserviceaccount \
   --name=aws-load-balancer-controller \
   --attach-policy-arn=arn:aws:iam::<ACCOUNT_ID>:policy/AWSLoadBalancerControllerIAMPolicy \
   --override-existing-serviceaccounts \
-  --region us-west-2 \
+  --region ap-south-1 \
   --approve
 ```
 
@@ -551,7 +551,7 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n ku
   --set clusterName=chetan-cluster2026 \
   --set serviceAccount.create=false \
   --set serviceAccount.name=aws-load-balancer-controller \
-  --set region=us-west-2 \
+  --set region=ap-south-1 \
   --version 1.13.3
 ```
 
@@ -791,6 +791,6 @@ chetan_db=# select * from posts;
 # Delete the EKS Cluster
 
 ```bash
-eksctl delete cluster --name chetan-cluster2026 --region us-west-2 
+eksctl delete cluster --name chetan-cluster2026 --region ap-south-1 
 ```
 
