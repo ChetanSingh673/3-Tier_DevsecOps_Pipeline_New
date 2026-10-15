@@ -157,10 +157,13 @@ kubectl apply -f mongo-statefulset.yaml
 kubectl get clustersecretstore aws-secrets-manager
 
 # Check the ExternalSecret sync status
-kubectl get externalsecret -n app db-credentials
+kubectl get externalsecret -n three-tier db-credentials
 
 # Verify the Kubernetes Secret was created
-kubectl get secret -n app db-credentials -o jsonpath='{.data.username}' | base64 -d
+sudo kubectl get secret -n three-tier db-credentials -o jsonpath='{.data.POSTGRES_USER}' | base64 -d
+sudo kubectl get secret -n three-tier db-credentials -o jsonpath='{.data.POSTGRES_DB}' | base64 -d
+sudo kubectl get secret -n three-tier db-credentials -o jsonpath='{.data.POSTGRES_PASSWORD}' | base64 -d
+
 ```
 
 **8. Verify MongoDB**
