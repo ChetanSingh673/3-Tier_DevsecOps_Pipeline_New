@@ -160,6 +160,7 @@ sudo kubectl get secret -n three-tier db-credentials -o jsonpath='{.data.POSTGRE
 **6. Verify PostgresDB**
 ```bash
 sudo kubectl exec -it blog-db-0 -n three-tier -- sh
+
 / # psql -U chetan_user -d chetan_db
 psql (16.15)
 Type "help" for help.
