@@ -24,7 +24,7 @@ spec:
             - containerPort: 5432
           envFrom:
             - secretRef:
-                name: db-credentials  
+                name: db-credentials  # It is same name which we mentioned in the external-secret.yaml
           volumeMounts:
             - name: db-storage
               mountPath: /var/lib/postgresql
