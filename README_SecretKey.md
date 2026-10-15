@@ -37,7 +37,8 @@ aws iam attach-role-policy \
 --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
 ```
 ```bash
-kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.44"
+# Commnad to check if csi and controller driver is installed or not
+sudo kubectl get pods -n kube-system | grep ebs-csi
 ```
 If using a KMS customer-managed key, add kms:Decrypt permission on the KMS key ARN
 
