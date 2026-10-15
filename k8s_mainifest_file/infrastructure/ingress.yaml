@@ -8,7 +8,7 @@ metadata:
     alb.ingress.kubernetes.io/load-balancer-name: blog-alb
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:607416643673:certificate/18f3c810-8b3d-4915-a42b-0e45043cdce2
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:607416643673:certificate/712cf8ae-8c8e-4b9e-8f17-6075de1fde47
     alb.ingress.kubernetes.io/ssl-redirect: '443'
 
 spec:
